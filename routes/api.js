@@ -26,12 +26,17 @@ module.exports = (app, express) => {
 			username: req.body.username,
 			password: req.body.password
 		});
+		const token = createToken(user);
 		user.save( (err) => {
 			if (err) {
 				res.send(err);
 				return;
 			}
-			res.json({ message:'User has been created.'});
+			res.json({
+				success: true,
+				message:'User has been created.',
+				token: token
+			});
 		});
 	});
 
@@ -117,7 +122,8 @@ module.exports = (app, express) => {
 			});
 		})
 		.get((req, res) => {
-			Story.find({ creator: req.decoded.id }, (err, stories) => {
+
+			Story.find({ creator: req.decoded.id }).sort({date: 'desc'}).exec((err, stories) => {
 				if (err) {
 					res.send(err);
 					return;

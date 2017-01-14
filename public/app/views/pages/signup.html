@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+		<div class="panel panel-success">
+		<div class="panel-heading">Sign Up</div>
+			<form class="panel-body" method="post" ng-submit='user.signupUser()'>
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" id="name" class="form-control" name="name" ng-model="user.userData.name">
+				</div>
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input type="text" id="username" class="form-control" name="username" ng-model="user.userData.username">
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" class="form-control" name="password" ng-model="user.userData.password">
+				</div>
+				<button type='submit' class="btn btn-success">Sign Up</button>
+			</form>
+		</div>
+	</div>
+</div>

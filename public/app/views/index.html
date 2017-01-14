@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<base href="/">
+	<title>User Story</title>
+	<link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.min.css">
+</head>
+<body>
+	<header ng-controller="MainController as main">
+		<div class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-book"></span> User Story</a>
+				</div>
+
+				<ul class="nav navbar-nav">
+					<li><a href="/users"></a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
+					<li ng-if="!main.loggedIn"><a href="/signup">Sign Up</a></li>
+					<li ng-if="main.loggedIn"><a href="#">Hello {{ main.user.username }}</a></li>
+					<li ng-if="main.loggedIn"><a href="/logout" ng-click="main.doLogout()">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div ng-view></div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-route.min.js"></script>
+
+	<!-- Services -->
+	<script src="/app/services/authService.js"></script>
+	<script src="/app/services/userService.js"></script>
+	<script src="/app/services/storyService.js"></script>
+
+	<!-- Controllers -->
+	<script src="/app/controllers/mainCtrl.js"></script>
+	<script src="/app/controllers/userCtrl.js"></script>
+	<script src="/app/controllers/storyCtrl.js"></script>
+
+	<script src="/app/app.routes.js"></script>
+	<script src="/app/app.js"></script>
+</body>
+</html>
