@@ -14,7 +14,7 @@
 				</div>
 
 				<ul class="nav navbar-nav">
-					<li><a href="/users"></a></li>
+					<li><a href="/job">Jobs</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
@@ -36,11 +36,13 @@
 	<script src="/app/services/authService.js"></script>
 	<script src="/app/services/userService.js"></script>
 	<script src="/app/services/storyService.js"></script>
+	<script src="/app/services/jobService.js"></script>
 
 	<!-- Controllers -->
 	<script src="/app/controllers/mainCtrl.js"></script>
 	<script src="/app/controllers/userCtrl.js"></script>
 	<script src="/app/controllers/storyCtrl.js"></script>
+	<script src="/app/controllers/jobCtrl.js"></script>
 
 	<script src="/app/app.routes.js"></script>
 	<script src="/app/app.js"></script>

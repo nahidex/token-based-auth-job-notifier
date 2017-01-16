@@ -1,0 +1,28 @@
+<div class="col-md-4 col-md-offset-4">
+	<div class="panel">
+		<div class="panel-heading">
+			<h4>Create Your Job Post</h4>
+			<form method="post" ng-submit='job.create()'>
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" id="name" ng-model='job.jobData.name' placeholder="Title of your job" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="url">URL</label>
+					<input type="text" id="url" ng-model='job.jobData.url' placeholder="You job Notice url" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="parentTagName">Parent Tag Name</label>
+					<input type="text" id="parentTagName" ng-model='job.jobData.parentTagName' placeholder="Tag name of the content area" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="childTagName">Child Tag Name</label>
+					<input type="text" id="childTagName" ng-model='job.jobData.childTagName' placeholder="Tag name of the content area" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-success">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

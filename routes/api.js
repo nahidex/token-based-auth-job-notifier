@@ -1,8 +1,11 @@
 const User = require('../models/user');
 const Story = require('../models/story');
+const Job = require('../models/job');
 const config = require('../config');
 const secretKey = config.secretKey;
+const request = require('request');
 const jwt = require('jsonwebtoken');
+const cheerio = require('cheerio');
 
 function createToken(user){
 	const token  = jwt.sign({
@@ -14,6 +17,16 @@ function createToken(user){
 	});
 
 	return token;
+}
+
+function scrap(url, parentTagName = null, childTagName = null, cb) {
+	request(url, (err, res, html) => {
+		if(!err && res.statusCode == 200){
+			var $ = cheerio.load(html);
+			var data = $(parentTagName);
+			cb(data.find(childTagName).text());
+		}
+	});
 }
 
 module.exports = (app, express) => {
@@ -131,6 +144,52 @@ module.exports = (app, express) => {
 				res.json(stories);
 			});
 			//res.json({ message: "You get the home route." });
+		});
+
+		api.route('/job')
+		.post((req, res) => {
+			const job = new Job({
+				creator: req.decoded.id,
+				name: req.body.name,
+				url: req.body.url,
+				parentTagName: req.body.parentTagName,
+				childTagName: req.body.childTagName
+			});
+			job.save((err) => {
+				if (err) {
+					res.send(err);
+					return;
+				}
+				res.json({ message: 'New Job Schema Created.' });
+			});
+		})
+		.get((req, res) => {
+			Job.find({ creator: req.decoded.id }).sort({date: 'desc'}).lean().exec((err, jobs) => {
+				if (err) {
+					res.send(err);
+					return;
+				}
+				jobs = jobs.map(function(job) {
+
+					scrap(job.url, job.parentTagName, job.childTagName, function(d){
+						var updatedJob = {
+							name: '',
+							url: '',
+							parentTagName: '',
+							childTagName: '',
+							data: ''
+						};
+						updatedJob.data = d;
+						updatedJob.name = job.name,
+						updatedJob.url = job.url,
+						updatedJob.parentTagName = job.parentTagName,
+						updatedJob.childTagName = job.childTagName
+
+						return updatedJob;
+					});
+				});
+				res.json(jobs);
+			});
 		});
 
 	api.get('/me', (req, res) => {

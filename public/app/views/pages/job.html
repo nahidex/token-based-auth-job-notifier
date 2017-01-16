@@ -1,0 +1,17 @@
+<div class="col-md-12">
+	<div class="clearfix">
+		<h3 class="pull-left">All Jobs</h3><a href="/job/create" class="btn btn-success btn-lg pull-right">Create Job</a>
+	</div>
+	<ul class="list-unstyled row">
+		<li class="col-md-4" ng-repeat="job in allJobs.jobs">
+			<div class="panel">
+				<div class="panel-heading">
+					<h4>{{job.name}}</h4>
+					<a href="{{job.url}}" target="_blank">Goto website Notices</a>
+					<p class="muted">{{job.parentTagName}}</p>
+					<p class="muted">{{job.childTagName}}</p>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>

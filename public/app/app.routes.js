@@ -15,6 +15,17 @@ angular.module('appRoutes', ['ngRoute'])
 			controller: 'MainController',
 			controllerAs: 'login'
 		})
+		.when('/job', {
+			templateUrl: 'app/views/pages/job.html',
+			controller: 'JobController',
+			controllerAs: 'allJobs'
+		})
+		.when('/job/create', {
+			templateUrl: 'app/views/pages/jobCreate.html',
+			controller: 'JobController',
+			controllerAs: 'job'
+		})
+
 
 	$locationProvider.html5Mode(true);
 });
