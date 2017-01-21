@@ -10,5 +10,9 @@ angular.module('jobService', [])
 		return $http.get('/api/job');
 	}
 
+	jobFactory.getJob = function(jobId) {
+		return $http.get('/api/job/' + jobId);
+	}
+
 	return jobFactory;
 });

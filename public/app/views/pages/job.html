@@ -6,10 +6,12 @@
 		<li class="col-md-4" ng-repeat="job in allJobs.jobs">
 			<div class="panel">
 				<div class="panel-heading">
-					<h4>{{job.name}}</h4>
-					<a href="{{job.url}}" target="_blank">Goto website Notices</a>
-					<p class="muted">{{job.parentTagName}}</p>
-					<p class="muted">{{job.childTagName}}</p>
+					<h3>{{job.name}}</h3>
+					<a class="btn btn-danger btn-xs" href="{{job.url}}" target="_blank"><span class="glyphicon glyphicon-link"></span> View all Notice</a>
+					<h5>Notices</h5>
+					<section class="job-details-section">
+						<job-detail job-id={{job._id}}/>
+					</section>
 				</div>
 			</div>
 		</li>

@@ -2,15 +2,17 @@
 <html ng-app="myApp">
 <head>
 	<base href="/">
-	<title>User Story</title>
+	<title>Govt Job Notifier</title>
 	<link rel="stylesheet" href="https://bootswatch.com/lumen/bootstrap.min.css">
+	<link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+	<link href="/app/views/css/style.css" rel="stylesheet">
 </head>
 <body>
 	<header ng-controller="MainController as main">
 		<div class="navbar navbar-default">
 			<div class="container">
 				<div class="navbar-header">
-					<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-book"></span> User Story</a>
+					<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-book"></span> Govt Job Notifier</a>
 				</div>
 
 				<ul class="nav navbar-nav">
@@ -43,6 +45,14 @@
 	<script src="/app/controllers/userCtrl.js"></script>
 	<script src="/app/controllers/storyCtrl.js"></script>
 	<script src="/app/controllers/jobCtrl.js"></script>
+
+	<!-- directives -->
+	<script src="/app/directives/jobDetailDirective.js"></script>
+
+	<!-- Filters -->
+	<script src="/app/filters/utilsFilter.js"></script>
+
+
 
 	<script src="/app/app.routes.js"></script>
 	<script src="/app/app.js"></script>

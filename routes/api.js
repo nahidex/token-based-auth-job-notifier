@@ -4,8 +4,10 @@ const Job = require('../models/job');
 const config = require('../config');
 const secretKey = config.secretKey;
 const request = require('request');
+const requestPromise = require('request-promise');
 const jwt = require('jsonwebtoken');
 const cheerio = require('cheerio');
+const cheerioTableparser = require('cheerio-tableparser');
 
 function createToken(user){
 	const token  = jwt.sign({
@@ -20,12 +22,11 @@ function createToken(user){
 }
 
 function scrap(url, parentTagName = null, childTagName = null, cb) {
-	request(url, (err, res, html) => {
-		if(!err && res.statusCode == 200){
-			var $ = cheerio.load(html);
-			var data = $(parentTagName);
-			cb(data.find(childTagName).text());
-		}
+	requestPromise(url).then((html) => {
+		var $ = cheerio.load(html);
+		var data = $(parentTagName);
+		table = data.find(childTagName).text();
+		cb(table)
 	});
 }
 
@@ -77,7 +78,7 @@ module.exports = (app, express) => {
 				if (!validPassword) {
 					res.send({ message: 'Invalid Password' });
 				} else {
-					console.log(user);
+					////console.log(user);
 					const token = createToken(user);
 					res.status(200).json({
 						success: true,
@@ -164,34 +165,28 @@ module.exports = (app, express) => {
 			});
 		})
 		.get((req, res) => {
-			Job.find({ creator: req.decoded.id }).sort({date: 'desc'}).lean().exec((err, jobs) => {
+			Job.find({ creator: req.decoded.id }).sort({date: 'desc'}).exec((err, jobs) => {
 				if (err) {
 					res.send(err);
 					return;
 				}
-				jobs = jobs.map(function(job) {
-
-					scrap(job.url, job.parentTagName, job.childTagName, function(d){
-						var updatedJob = {
-							name: '',
-							url: '',
-							parentTagName: '',
-							childTagName: '',
-							data: ''
-						};
-						updatedJob.data = d;
-						updatedJob.name = job.name,
-						updatedJob.url = job.url,
-						updatedJob.parentTagName = job.parentTagName,
-						updatedJob.childTagName = job.childTagName
-
-						return updatedJob;
-					});
-				});
+				//console.log(jobs);
 				res.json(jobs);
 			});
 		});
 
+		api.route('/job/:id')
+		.get((req, res) => {
+			Job.findOne({_id: req.params.id }).exec((err, job) => {
+				if (err) {
+					res.send();
+					return;
+				}
+				scrap(job.url, job.parentTagName, job.childTagName, function(scrappedData){
+					res.send(scrappedData)
+				});
+			});
+		});
 	api.get('/me', (req, res) => {
 		res.json(req.decoded);
 	});
