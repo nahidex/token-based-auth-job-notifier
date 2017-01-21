@@ -13,4 +13,10 @@ angular.module('jobCtrl', ['jobService'])
 			$location.path('/');
 		});
 	}
+	vm.removeJob = function(id) {
+
+		Job.removeJob(id).success(function(data){
+			console.log(data);
+		});
+	}
 })

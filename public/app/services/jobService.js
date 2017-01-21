@@ -14,5 +14,9 @@ angular.module('jobService', [])
 		return $http.get('/api/job/' + jobId);
 	}
 
+	jobFactory.removeJob = function(jobId) {
+		return $http.delete('/api/job/' + jobId);
+	}
+
 	return jobFactory;
 });

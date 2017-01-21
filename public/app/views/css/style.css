@@ -3,6 +3,9 @@
 	font-size: 16px;
 	line-height: 1.5;
 }
+.job-name {
+	margin-top: 5px;
+}
 
 .loader {
 	margin: 40px auto;

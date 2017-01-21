@@ -148,45 +148,56 @@ module.exports = (app, express) => {
 		});
 
 		api.route('/job')
-		.post((req, res) => {
-			const job = new Job({
-				creator: req.decoded.id,
-				name: req.body.name,
-				url: req.body.url,
-				parentTagName: req.body.parentTagName,
-				childTagName: req.body.childTagName
-			});
-			job.save((err) => {
-				if (err) {
-					res.send(err);
-					return;
-				}
-				res.json({ message: 'New Job Schema Created.' });
-			});
-		})
-		.get((req, res) => {
-			Job.find({ creator: req.decoded.id }).sort({date: 'desc'}).exec((err, jobs) => {
-				if (err) {
-					res.send(err);
-					return;
-				}
-				//console.log(jobs);
-				res.json(jobs);
-			});
-		});
-
-		api.route('/job/:id')
-		.get((req, res) => {
-			Job.findOne({_id: req.params.id }).exec((err, job) => {
-				if (err) {
-					res.send();
-					return;
-				}
-				scrap(job.url, job.parentTagName, job.childTagName, function(scrappedData){
-					res.send(scrappedData)
+			.post((req, res) => {
+				const job = new Job({
+					creator: req.decoded.id,
+					name: req.body.name,
+					url: req.body.url,
+					parentTagName: req.body.parentTagName,
+					childTagName: req.body.childTagName
+				});
+				job.save((err) => {
+					if (err) {
+						res.send(err);
+						return;
+					}
+					res.json({ message: 'New Job Schema Created.' });
+				});
+			})
+			.get((req, res) => {
+				Job.find({ creator: req.decoded.id }).sort({date: 'desc'}).exec((err, jobs) => {
+					if (err) {
+						res.send(err);
+						return;
+					}
+					//console.log(jobs);
+					res.json(jobs);
 				});
 			});
-		});
+
+		api.route('/job/:id')
+			.get((req, res) => {
+				Job.findOne({_id: req.params.id }).exec((err, job) => {
+					if (err) {
+						res.send();
+						return;
+					}
+					scrap(job.url, job.parentTagName, job.childTagName, function(scrappedData){
+						res.send(scrappedData)
+					});
+				});
+			})
+			.delete((req, res) => {
+				Job.findOne({_id: req.params.id }).remove().exec((err, job) => {
+					if (err) {
+						res.send();
+						return;
+					}
+					res.json({
+						'message': 'Item deleted successfully'
+					});
+				});
+			});
 	api.get('/me', (req, res) => {
 		res.json(req.decoded);
 	});
