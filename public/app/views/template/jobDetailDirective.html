@@ -1,6 +1,9 @@
 <div class="job-detail-wrapper">
 	<div ng-show="data">
-		{{data | trim:true:700}}
+		<!-- {{data | trim:true:700}} -->
+		<ul class="list-group list-conde">
+			<li class="list-group-item" ng-repeat="d in data | limitTo:4">{{d}}</li>
+		</ul>
 	</div>
 	<loader ng-show="!data"></loader>
 </div>

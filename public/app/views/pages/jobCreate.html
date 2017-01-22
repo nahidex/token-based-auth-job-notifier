@@ -13,11 +13,15 @@
 				</div>
 				<div class="form-group">
 					<label for="parentTagName">Parent Tag Name</label>
-					<input type="text" id="parentTagName" ng-model='job.jobData.parentTagName' placeholder="Tag name of the content area" class="form-control" required>
+					<input type="text" id="parentTagName" ng-model='job.jobData.parentTagName' placeholder="#idname, .classname" class="form-control" required>
 				</div>
 				<div class="form-group">
 					<label for="childTagName">Child Tag Name</label>
-					<input type="text" id="childTagName" ng-model='job.jobData.childTagName' placeholder="Tag name of the content area" class="form-control" required>
+					<input type="text" id="childTagName" ng-model='job.jobData.childTagName' placeholder="table" class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label for="grantChildTagName">Grant Child Tag Name</label>
+					<input type="text" id="grantChildTagName" ng-model='job.jobData.grantChildTagName' placeholder="tr, li" class="form-control" required>
 				</div>
 				<div class="form-group">
 					<button class="btn btn-success">Create</button>

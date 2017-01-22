@@ -21,12 +21,27 @@ function createToken(user){
 	return token;
 }
 
-function scrap(url, parentTagName = null, childTagName = null, cb) {
+function scrap(url, parentTagName = null, childTagName = null, grantChildTagName = null, cb) {
 	requestPromise(url).then((html) => {
+		var arr = [];
+		var p = Promise.resolve();
+
 		var $ = cheerio.load(html);
 		var data = $(parentTagName);
-		table = data.find(childTagName).text();
-		cb(table)
+		table = data.find(childTagName);
+		table.each(function(i, item){
+			var thiz = $(this);
+			p = p.then(function(){
+				data = thiz.find(grantChildTagName).text();
+				arr.push(data);
+
+			});
+		});
+
+		p.then(function(){
+			cb(arr);
+		});
+
 	});
 }
 
@@ -154,7 +169,8 @@ module.exports = (app, express) => {
 					name: req.body.name,
 					url: req.body.url,
 					parentTagName: req.body.parentTagName,
-					childTagName: req.body.childTagName
+					childTagName: req.body.childTagName,
+					grantChildTagName: req.body.grantChildTagName
 				});
 				job.save((err) => {
 					if (err) {
@@ -182,8 +198,10 @@ module.exports = (app, express) => {
 						res.send();
 						return;
 					}
-					scrap(job.url, job.parentTagName, job.childTagName, function(scrappedData){
-						res.send(scrappedData)
+					console.log(job.grantChildTagName);
+					scrap(job.url, job.parentTagName, job.childTagName, job.grantChildTagName, function(scrappedData){
+						//console.log(scrappedData);
+						res.send(scrappedData);
 					});
 				});
 			})

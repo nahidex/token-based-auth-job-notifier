@@ -14,7 +14,6 @@ angular.module('jobCtrl', ['jobService'])
 		});
 	}
 	vm.removeJob = function(id) {
-
 		Job.removeJob(id).success(function(data){
 			console.log(data);
 		});

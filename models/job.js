@@ -6,7 +6,8 @@ const JobSchema = new Schema({
 	name: String, // No-condition
 	url: String,
 	parentTagName: String,
-	childTagName: String
+	childTagName: String,
+	grantChildTagName: String
 });
 
 module.exports = mongoose.model('Job', JobSchema);
